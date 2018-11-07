@@ -1,8 +1,18 @@
 # tt
 
-Time tracking script using hledger and timeclock format.
+## What is it?
 
-## Examples
+Time tracking script using hledger and timeclock format. Get hledger from
+[hledger.org](http://hledger.org/download.html). Read about the timeclock
+format [here](http://hledger.org/timeclock.html).
+
+## Why would I want this?
+
+This makes it easy to keep track of how much time you spend on different
+activities. You might want that informally to monitor productivity, or formally
+for invoicing.
+
+## How do I use this?
 
 ```sh
 tt in email            # start reading email
@@ -14,7 +24,7 @@ tt sw my other project # start working on 'my other project'
 tt o 16:00             # forgot to clock out; log it as 4PM explicitly
 ```
 
-## Usage
+### Usage
 
 ```
 Usage: tt [COMMAND] [ARGS]
