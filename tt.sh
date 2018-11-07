@@ -12,7 +12,7 @@ Track time
 
 i|in                "Time in" to begin a task. Args: [optional date] [task name]
 o|out               "Time out" to end a task. Args: [optional date]
-s|stat              Show the current status (last line in the timeclock file).
+s|stat|t|tail       Show the end of the timeclock file. Args: [optional n lines]
 b|bal               Show daily balances.
 n|sw|next|switch    End (time out of) the current task, and begin the next.
                     task. New task name is the next arg.
@@ -65,8 +65,9 @@ case $1 in
 		shift
 		time_out $*
 		;;
-	s|stat)
-		tail -n 1 $TIME_FILE
+	s|stat|t|tail)
+		shift
+		tail_file $*
 		;;
 	b|bal)
 		hledger -f $TIME_FILE bal
@@ -86,10 +87,6 @@ case $1 in
 		;;
 	e|edit)
 		$EDITOR $TIME_FILE
-		;;
-	t|tail)
-		shift
-		tail_file $*
 		;;
 	*)
 		echo "Unknown command ${1}"
