@@ -83,7 +83,7 @@ case $1 in
 		;;
 	n|sw|next|switch)
 		shift
-		time_out && time_in $*
+		time_out $* && time_in $*
 		;;
 	e|edit)
 		$EDITOR $TIME_FILE
