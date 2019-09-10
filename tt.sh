@@ -36,19 +36,16 @@ function time_in {
 		activity="${@:2}"
 	fi
 	#
-	# Split the activity into
-	#   - the project: anything before
-	#       - the first [[:blank:]]: OR
-	#       - the first :[[:blank:]] OR
-	#       - the first [[:blank:]]s
-	#     colon-separated project hierarchy is supported
-	#     in the absence of colon, whitespace-containing project names
-	#     aren't supported.
+	# Split the activity into:
+	#
+	#   - the project: anything before the first whitespace(s)
+	#     whitespace-containing project name aren't supported.
 	#     (maps to the hledger transaction virtual account)
-	#   - the project task: anything after the project
+	#
+	#   - the project task: anything following the first whitespace(s)
 	#     (maps to the hledger transaction description)
 	#
-	local project_task=$(echo "${activity}" | sed -E "s/[[:blank:]]:|:[[:blank:]]|[[:blank:]]+/  /")
+	local project_task=$(echo "${activity}" | sed -E "s/[[:blank:]]+/  /")
 	echo "Begin ${project_task} at ${time}"
 	echo "i ${time} ${project_task}" >> $TIME_FILE
 }
