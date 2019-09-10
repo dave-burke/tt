@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
-TIME_FILE=~/.hours.timeclock
+TIME_FILE=${TIME_FILE:-${HOME}/.hours.timeclock}
 
 function usage {
 	scriptName="$(basename ${0})"
@@ -10,7 +10,7 @@ function usage {
 Usage: ${scriptName} [COMMAND] [ARGS]
 Track time
 
-i|in                "Time in" to begin a task. Args: [optional date] [task name]
+i|in                "Time in" to begin a task. Args: [optional date] [task project] [optional task description] 
 o|out               "Time out" to end a task. Args: [optional date]
 s|stat|t|tail       Show the end of the timeclock file. Args: [optional n lines]
 b|bal               Show daily balances.
@@ -35,13 +35,27 @@ function time_in {
 		time="$(date '+%Y-%m-%d') ${1}:00"
 		activity="${@:2}"
 	fi
-	echo "Begin ${activity} at ${time}"
-	echo "i ${time} ${activity}" >> $TIME_FILE
+	#
+	# Split the activity into
+	#   - the project: anything before
+	#       - the first [[:blank:]]: OR
+	#       - the first :[[:blank:]] OR
+	#       - the first [[:blank:]]s
+	#     colon-separated project hierarchy is supported
+	#     in the absence of colon, whitespace-containing project names
+	#     aren't supported.
+	#     (maps to the hledger transaction virtual account)
+	#   - the project task: anything after the project
+	#     (maps to the hledger transaction description)
+	#
+	local project_task=$(echo "${activity}" | sed -E "s/[[:blank:]]:|:[[:blank:]]|[[:blank:]]+/  /")
+	echo "Begin ${project_task} at ${time}"
+	echo "i ${time} ${project_task}" >> $TIME_FILE
 }
 
 function time_out {
 	local time=$(date '+%Y-%m-%d %H:%M:%S')
-	if [[ "${1}" =~ ^[0-9]{2}:[0-9]{2}$ ]]; then
+	if [[ "${1:-}" =~ ^[0-9]{2}:[0-9]{2}$ ]]; then
 		time="$(date '+%Y-%m-%d') ${1}:00"
 	fi
 	echo "End at $time"
