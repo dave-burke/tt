@@ -37,7 +37,10 @@ Track time
 i|in                "Time in" to begin a task. Args: [optional date] [task name]
 o|out               "Time out" to end a task. Args: [optional date]
 s|stat              Show the current status (last line in the timeclock file).
-b|bal               Show daily balances.
+b|bal               Show total balances.
+d|daily             Show daily balances for the week.
+w|weekly            Show weekly balances for the month.
+q|quarterly         Show quarterly balances for the year.
 n|sw|next|switch    End (time out of) the current task, and begin the next.
                     task. New task name is the next arg.
 e|edit              Edit the timeclock file with ${EDITOR}.
