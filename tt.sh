@@ -17,7 +17,6 @@ b|bal               Show daily balances.
 n|sw|next|switch    End (time out of) the current task, and begin the next.
                     task. New task name is the next arg.
 e|edit              Edit the timeclock file with \${EDITOR}.
-t|tail              Show the last 10 lines of the ledger
 
 EOF
 
