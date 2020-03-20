@@ -35,6 +35,9 @@ function time_in {
 		time="$(date '+%Y-%m-%d') ${1}:00"
 		activity="${@:2}"
 	fi
+	if [[ -z "${activity}" ]]; then
+		activity="work"
+	fi
 	echo "Begin ${activity} at ${time}"
 	echo "i ${time} ${activity}" >> $TIME_FILE
 }

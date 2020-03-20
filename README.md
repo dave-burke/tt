@@ -24,6 +24,10 @@ tt sw my other project # start working on 'my other project'
 tt o 16:00             # forgot to clock out; log it as 4PM explicitly
 ```
 
+If you only care about how much you're working, and not what you're working on,
+then it's even easier. You can just use `tt i` when you start working, and `tt
+o` when you stop. The activity will default to "work."
+
 ### Usage
 
 ```
